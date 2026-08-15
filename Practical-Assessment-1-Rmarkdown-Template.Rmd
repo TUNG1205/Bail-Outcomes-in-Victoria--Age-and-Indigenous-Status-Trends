@@ -1,0 +1,152 @@
+---
+title: "Data Wrangling (Data Preprocessing)" 
+author: "Tung Duc Nguyen"
+subtitle: Practical assessment 1
+date: ""
+output:
+  html_notebook: default 
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+
+## **Setup**
+
+```{r}
+# Load the necessary packages required to reproduce the report. For example:
+
+library(kableExtra)
+library(magrittr)
+#citation("dplyr")
+
+```
+
+
+## **Student names, numbers and percentage of contributions**
+```{r, echo=FALSE}
+
+# Add your names, numbers and percentage of your contribution here.
+
+na<- c(" name1"," name2")
+no<- c(" number1","  number2")
+pc<- c("Percentage1","  Percentage2")
+
+s<- data.frame(cbind(na,no,pc))
+colnames(s)<- c("Student name", "Student number", "Percentage of contribution")
+
+s %>% kbl(caption = "Group information") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+
+
+
+```
+
+## **Data Description**
+
+Provide explanations here. You may use bulleted lists like this:
+
+* a
+* b
+* ....
+
+
+
+## **Read/Import Data**
+
+
+```{r}
+# Import the data, provide your R codes here.
+library(readxl)
+bail_justice_data <- read_xlsx("Bail_Justice_Data_Tables_Bail_Visualisation_Year_Ending_March_2026.xlsx", sheet = "Table 01")
+class(bail_justice_data)
+```
+
+Provide explanations here:
+
+First I ran the library(readxl) to load the package "readxl" into my session so I can use its function: "read_xlsx" to read my dataset from an excel file. 
+Then I ran "read_xlsx" to read my file "Bail_Justice_Data_Tables_Bail_Visualisation_Year_Ending_March_2026.xlsx", specifically sheet "Table 01" as that is where the data table is, while other sheets contain unusable data. 
+I assigned the result to a new object named: bail_justice_data, which is now a dataframe in my R environment. To double check that fact, I also ran the class function on it. 
+
+## **Inspect and Understand**
+
+
+```{r}
+# Inspection of your data, provide R codes here.
+str(bail_justice_data)
+class(bail_justice_data)
+```
+Firstly for the inspection, I ran str() to get an overview of the dataset's structure, which shows me the total number of observations and variables, and for each variables it also shows the data type with a preview of the first few values. Additionally, I also ran class() to confirm that the dataset is a dataframe. 
+```{r}
+# Inspection of your data, provide R codes here.
+head(bail_justice_data)
+head(bail_justice_data, n = 10)
+tail(bail_justice_data)
+```
+I ran head() to preview the first 6 rows of my dataset by default and then ran it again with n = 10 to view the first 10 rows for a slightly larger data sample. Afterwards I ran tail() to preview the last six rows of the dataset to check that both the head and tail had beenn imported correctly.
+```{r}
+# Inspection of your data, provide R codes here.
+class(bail_justice_data$Outcome)
+class(bail_justice_data$`Record Count`)
+typeof(bail_justice_data$Year)
+typeof(bail_justice_data$`Record Count`)
+is.numeric(bail_justice_data$Year)
+is.numeric(bail_justice_data$`Record Count`)
+is.numeric(bail_justice_data$`Data Source`)
+```
+I ran class() on the Outcome and Record Count columns specifically to check the data type of each and then used typeof() on Year and Record Count to check how R is storing these numeric variables. Finally, I used is.numeric() to explicitly test whether Year, Record Count, and Data Source are numeric variables. This confirmed that Year and Record Count are numeric (returning TRUE), while Data Source is not (returning FALSE), since it's a text variable rather than a numeric one.
+```{r}
+# Inspection of your data, provide R codes here.
+attributes(bail_justice_data)
+```
+I ran attributes() on my data frame to show the column names, the row names, and the class of the object, which is useful for confirming the overall shape and labeling of the dataset beyond just the individual variable types.
+```{r}
+# Inspection of your data, provide R codes here.
+bail_justice_data[c("Outcome", "Age Group", "Indigenous Status", "Data Source")] <- lapply(bail_justice_data[c("Outcome", "Age Group", "Indigenous Status", "Data Source")], as.factor)
+str(bail_justice_data)
+levels(bail_justice_data$`Age Group`)
+```
+Since Outcome, Age Group, Indigenous Status, and Data Source are all categorical variables that were imported as character type, I used lapply() to apply the as.factor() function to all four columns and reassign them back into the data frame. This converts each of them from character to factor, which is more appropriate for categorical data. I then ran str() again to confirm the four columns are now listed as factors instead of characters, and ran levels() on the Age Group column specifically to check what categories exist now that it has been converted, confirming the conversion worked.
+```{r}
+# Inspection of your data, provide R codes here.
+bail_justice_data$Year <- as.integer(bail_justice_data$Year)
+typeof(bail_justice_data$Year)
+```
+Finally, I converted the Year column from numeric (double) to integer using as.integer(), since Year is really a whole-number rather than a continuous measurement, so I find that integer is the more appropriate and accurate type for it. I then ran typeof() again on Year to confirm the conversion was successful and it now shows as "integer" rather than "double".
+
+## **Subsetting** 
+
+
+```{r}
+
+# Subset your data and convert it to a matrix, provide R codes here.
+
+
+```
+
+Provide explanations here.
+
+## **Create a new Data Frame**
+
+
+```{r}
+
+# Create a new data frame, provide R codes here.
+
+
+```
+
+Provide explanations here.
+
+
+<br>
+<br>
+
+
+##	**Presentation **
+
+Add the link to your presentation in ().
+
+[Presentation]()
+
+
