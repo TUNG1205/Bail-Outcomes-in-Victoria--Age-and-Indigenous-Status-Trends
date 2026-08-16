@@ -136,14 +136,10 @@ summary_stats <- bail_justice_data %>%
 
 summary_stats
 
-
 ```
-
 Provide explanations here.
 I grouped the bail justice data by the categorical variable "Outcome" and calculated the summary statistics for the numeric variable "Record Count". I used mean() to find the average record count, median() to find the middle value, quantile() to calculate the first and third quartiles, and sd() to find the standard deviation for each outcome. I also used na.rm = TRUE so any missing values would be ignored during the calculations.
 From the output, I find that "Bail refused" has the highest mean Record Count of approximately 1465.42 and also the highest median of 867. It also has the highest standard deviation of approximately 1819.36, which shows that the Record Count for Bail refused varies much more than the other outcomes. "No application" has the lowest mean Record Count of approximately 129.93 and the lowest standard deviation of approximately 97.39.
-
-
 
 ## **Subsetting** 
 
