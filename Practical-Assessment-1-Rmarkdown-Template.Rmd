@@ -189,6 +189,14 @@ Finally, I created another numeric vector called "score" with 10 observations an
 <br>
 <br>
 
+## **References**
+Bache SM and Wickham H (2026) *magrittr: A Forward-Pipe Operator for R*, version 2.0.5, R package, doi:10.32614/CRAN.package.magrittr.
+
+Wickham H and Bryan J (2026) *readxl: Read Excel Files*, version 1.5.0, R package, doi:10.32614/CRAN.package.readxl.
+
+Wickham H, François R, Henry L, Müller K and Vaughan D (2026) *dplyr: A Grammar of Data Manipulation*, version 1.2.1, R package, doi:10.32614/CRAN.package.dplyr.
+
+Zhu H (2026) *kableExtra: Construct Complex Table with 'kable' and Pipe Syntax*, version 1.4.1, R package, doi:10.32614/CRAN.package.kableExtra.
 
 ##	**Presentation **
 
