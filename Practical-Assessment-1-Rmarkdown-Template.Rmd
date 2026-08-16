@@ -18,6 +18,7 @@ output:
 
 library(kableExtra)
 library(magrittr)
+library(readxl)
 #citation("dplyr")
 
 ```
@@ -28,9 +29,9 @@ library(magrittr)
 
 # Add your names, numbers and percentage of your contribution here.
 
-na<- c(" name1"," name2")
-no<- c(" number1","  number2")
-pc<- c("Percentage1","  Percentage2")
+na<- c("Tung Duc Nguyen"," Xuan Hoang Nguyen")
+no<- c(" 4275232","  4280335")
+pc<- c("50","  50")
 
 s<- data.frame(cbind(na,no,pc))
 colnames(s)<- c("Student name", "Student number", "Percentage of contribution")
@@ -38,19 +39,25 @@ colnames(s)<- c("Student name", "Student number", "Percentage of contribution")
 s %>% kbl(caption = "Group information") %>%
   kable_classic(full_width = F, html_font = "Cambria")
 
-
-
 ```
 
 ## **Data Description**
 
-Provide explanations here. You may use bulleted lists like this:
+Data set: Bail Justice bail applications by outcome, age group and Indigenous status — data ending March 2026
 
-* a
-* b
-* ....
+Source: Crime Statistics Agency (CSA) Victoria, published via the Victorian Government's open data platform (data.vic.gov.au)
 
+The data set records the outcomes of bail applications heard by a Bail Justice in Victoria, organized by age group and Indigenous status, reported as 12-month totals ending each March from 2017 to 2026.
 
+Variables:
+
+- Year – the year the 12-month reporting period ends
+- Year ending – the month the period ends
+- Data Source – the agency/court the data was recorded by
+- Outcome – categorical: the result of the bail application (Bail granted, Bail refused, No application)
+- Age Group – categorical: Adult 18 years and over, Child under 18 years, or Total
+- Indigenous Status – categorical: Aboriginal and/or Torres Strait Islander, Non-Indigenous, or Total People
+- Record Count – numeric: the number of people/applications matching that combination of Outcome, Age Group and Indigenous Status for that year
 
 ## **Read/Import Data**
 
@@ -61,15 +68,11 @@ library(readxl)
 bail_justice_data <- read_xlsx("Bail_Justice_Data_Tables_Bail_Visualisation_Year_Ending_March_2026.xlsx", sheet = "Table 01")
 class(bail_justice_data)
 ```
-
-Provide explanations here:
-
 First I ran the library(readxl) to load the package "readxl" into my session so I can use its function: "read_xlsx" to read my dataset from an excel file. 
 Then I ran "read_xlsx" to read my file "Bail_Justice_Data_Tables_Bail_Visualisation_Year_Ending_March_2026.xlsx", specifically sheet "Table 01" as that is where the data table is, while other sheets contain unusable data. 
 I assigned the result to a new object named: bail_justice_data, which is now a dataframe in my R environment. To double check that fact, I also ran the class function on it. 
 
 ## **Inspect and Understand**
-
 
 ```{r}
 # Inspection of your data, provide R codes here.
