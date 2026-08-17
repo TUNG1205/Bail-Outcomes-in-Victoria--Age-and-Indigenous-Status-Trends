@@ -10,12 +10,10 @@ output:
     df_print: paged
 ---
 
-
 ## **Setup**
 
 ```{r}
-# Load the necessary packages required to reproduce the report. For example:
-
+# Loading necessary packages:
 library(kableExtra)
 library(magrittr)
 library(readxl)
@@ -24,15 +22,14 @@ library(dplyr)
 
 ```
 
-
 ## **Student names, numbers and percentage of contributions**
 ```{r, echo=FALSE}
 
 # Add your names, numbers and percentage of your contribution here.
 
-na<- c("Tung Duc Nguyen"," Xuan Hoang Nguyen")
-no<- c(" 4275232","  4280335")
-pc<- c("50","  50")
+na<- c("Tung Duc Nguyen"," Hoang Nguyen")
+no<- c("4275232","4280335")
+pc<- c("50","50")
 
 s<- data.frame(cbind(na,no,pc))
 colnames(s)<- c("Student name", "Student number", "Percentage of contribution")
@@ -46,7 +43,7 @@ s %>% kbl(caption = "Group information") %>%
 
 Data set: Bail Justice bail applications by outcome, age group and Indigenous status — data ending March 2026
 
-Source: Crime Statistics Agency (CSA) Victoria, published via the Victorian Government's open data platform (data.vic.gov.au)
+Source: Crime Statistics Agency (CSA) Victoria, published via the Victorian Government's open data platform (https://discover.data.vic.gov.au/dataset/bail-statistics)
 
 The data set records the outcomes of bail applications heard by a Bail Justice in Victoria, organized by age group and Indigenous status, reported as 12-month totals ending each March from 2017 to 2026.
 
@@ -55,13 +52,12 @@ Variables:
 - Year – the year the 12-month reporting period ends
 - Year ending – the month the period ends
 - Data Source – the agency/court the data was recorded by
-- Outcome – categorical: the result of the bail application (Bail granted, Bail refused, No application)
-- Age Group – categorical: Adult 18 years and over, Child under 18 years, or Total
-- Indigenous Status – categorical: Aboriginal and/or Torres Strait Islander, Non-Indigenous, or Total People
-- Record Count – numeric: the number of people/applications matching that combination of Outcome, Age Group and Indigenous Status for that year
+- Outcome – the result of the bail application (Bail granted, Bail refused, No application)
+- Age Group – Adult 18 years and over, Child under 18 years, or Total
+- Indigenous Status – Aboriginal and/or Torres Strait Islander, Non-Indigenous, or Total People
+- Record Count – the number of people/applications matching that combination of Outcome, Age Group and Indigenous Status for that year
 
 ## **Read/Import Data**
-
 
 ```{r}
 # Import the data, provide your R codes here.
@@ -70,26 +66,37 @@ bail_justice_data <- read_xlsx("Bail_Justice_Data_Tables_Bail_Visualisation_Year
 class(bail_justice_data)
 ```
 First we ran the library(readxl) to load the package "readxl" into our session so we can use its function: "read_xlsx" to read our dataset from an excel file. 
+
 Then we ran "read_xlsx" to read our file "Bail_Justice_Data_Tables_Bail_Visualisation_Year_Ending_March_2026.xlsx", specifically sheet "Table 01" as that is where the data table is, while other sheets contain unusable data. 
 We assigned the result to a new object named: bail_justice_data, which is now a dataframe in our R environment. To double check that fact, we also ran the class function on it. 
 
 ## **Inspect and Understand**
 
 ```{r}
-# Inspection of your data, provide R codes here.
+# Check the overall structure and object type of the dataset
 str(bail_justice_data)
 class(bail_justice_data)
 ```
 Firstly for the inspection, we ran str() to get an overview of the dataset's structure, which shows us the total number of observations and variables, and for each variables it also shows the data type with a preview of the first few values. Additionally, we also ran class() to confirm that the dataset is a dataframe. 
+
 ```{r}
-# Inspection of your data, provide R codes here.
+# Preview the first and last rows of the dataset
 head(bail_justice_data)
 head(bail_justice_data, n = 10)
 tail(bail_justice_data)
 ```
 We ran head() to preview the first 6 rows of our dataset by default and then ran it again with n = 10 to view the first 10 rows for a slightly larger data sample. Afterwards we ran tail() to preview the last six rows of the dataset to check that both the head and tail had beenn imported correctly.
+
 ```{r}
-# Inspection of your data, provide R codes here.
+# Check for missing values
+colSums(is.na(bail_justice_data))
+```
+We used colSums(is.na()) to check for missing values in each individual column. The table presented zero count of missing values so there are no missing values in the data set.
+
+To achieve this, We referred to a GeeksforGeeks tutorial on finding and counting missing values in R to confirm the correct functions to use for this check (https://www.geeksforgeeks.org/r-language/how-to-find-and-count-missing-values-in-r-dataframe/)
+
+```{r}
+# Check the data type of individual variables
 class(bail_justice_data$Outcome)
 class(bail_justice_data$`Record Count`)
 typeof(bail_justice_data$Year)
@@ -99,27 +106,31 @@ is.numeric(bail_justice_data$`Record Count`)
 is.numeric(bail_justice_data$`Data Source`)
 ```
 We ran class() on the Outcome and Record Count columns specifically to check the data type of each and then used typeof() on Year and Record Count to check how R is storing these numeric variables. Finally, we used is.numeric() to explicitly test whether Year, Record Count, and Data Source are numeric variables. This confirmed that Year and Record Count are numeric (returning TRUE), while Data Source is not (returning FALSE), since it's a text variable rather than a numeric one.
+
 ```{r}
-# Inspection of your data, provide R codes here.
+# Check the attributes (metadata) of the dataset
 attributes(bail_justice_data)
 ```
 We ran attributes() on our data frame to show the column names, the row names, and the class of the object, which is useful for confirming the overall shape and labeling of the dataset beyond just the individual variable types.
+
 ```{r}
-# Inspection of your data, provide R codes here.
+# Convert categorical variables from character to factor
 bail_justice_data[c("Outcome", "Age Group", "Indigenous Status", "Data Source")] <- lapply(bail_justice_data[c("Outcome", "Age Group", "Indigenous Status", "Data Source")], as.factor)
 str(bail_justice_data)
 levels(bail_justice_data$`Age Group`)
 ```
 Since Outcome, Age Group, Indigenous Status, and Data Source are all categorical variables that were imported as character type, we used lapply() to apply the as.factor() function to all four columns and reassign them back into the data frame. This converts each of them from character to factor, which is more appropriate for categorical data. we then ran str() again to confirm the four columns are now listed as factors instead of characters, and ran levels() on the Age Group column specifically to check what categories exist now that it has been converted, confirming the conversion worked.
+
 ```{r}
-# Inspection of your data, provide R codes here.
+# Convert Year from numeric to integer
 bail_justice_data$Year <- as.integer(bail_justice_data$Year)
+bail_justice_data$`Record Count` <- as.integer(bail_justice_data$`Record Count`)
 typeof(bail_justice_data$Year)
+typeof(bail_justice_data$`Record Count`)
 ```
-Finally, we converted the Year column from numeric (double) to integer using as.integer(), since Year is really a whole-number rather than a continuous measurement, so we find that integer is the more appropriate and accurate type for it. we then ran typeof() again on Year to confirm the conversion was successful and it now shows as "integer" rather than "double".
+Finally, we converted the Year column and the Record Count column from numeric (double) to integer using as.integer(), since they are really whole-numbes rather than continuous measurements, therefore integer is the more appropriate and accurate type for them we then ran typeof() again to confirm the conversions were successful and it now shows as "integer" rather than "double".
 
 ## **Summary Statistics **
-
 
 ```{r}
 
@@ -136,11 +147,11 @@ summary_stats <- bail_justice_data %>%
 summary_stats
 ```
 
-We grouped the bail justice data by the categorical variable "Outcome" and calculated the summary statistics for the numeric variable "Record Count". We used mean() to find the average record count, median() to find the middle value, quantile() to calculate the first and third quartiles, and sd() to find the standard deviation for each outcome. We also used na.rm = TRUE so any missing values would be ignored during the calculations.
-From the output, we find that "Bail refused" has the highest mean Record Count of approximately 1465.42 and also the highest median of 867. It also has the highest standard deviation of approximately 1819.36, which shows that the Record Count for Bail refused varies much more than the other outcomes. "No application" has the lowest mean Record Count of approximately 129.93 and the lowest standard deviation of approximately 97.39.
+To start,we grouped the bail justice data by the categorical variable "Outcome" and calculated the summary statistics for the numeric variable "Record Count". Then, We used mean() to find the average record count, median() to find the middle value, quantile() to calculate the first and third quartiles, and sd() to find the standard deviation for each outcome. Additionally, We also used na.rm = TRUE so any missing values would be ignored during the calculations.
+
+From the output, we found that "Bail refused" has the highest mean Record Count of approximately 1465.42 and also the highest median of 867. It also has the highest standard deviation of approximately 1819.36, which shows that the Record Count for Bail refused varies much more than the other outcomes, while "No application" has the lowest mean Record Count of approximately 129.93 and the lowest standard deviation of approximately 97.39.
 
 ## **Subsetting** 
-
 
 ```{r}
 
@@ -155,11 +166,11 @@ typeof(bail_matrix)
 
 ```
 
-We used [1:10, ] to subset the first 10 observations from the bail justice data while keeping all variables. We then used as.matrix() to convert the subsetted data frame into a matrix.
-From the output, we find that the matrix is a character matrix. This happens because a matrix can only contain one data type, while a data frame can contain different data types in different columns. Since the subset contains categorical variables such as "Outcome", "Age Group" and "Indigenous Status" together with numeric variables such as "Year" and "Record Count", R converts all values to character so that the matrix can store them using one common data type.
+Firstly, we used [1:10, ] to subset the first 10 observations from the bail justice data while keeping all variables, then we used as.matrix() to convert the subsetted data frame into a matrix.
+
+From the output, we found that the matrix was a character matrix. This happened because a matrix can only contain one data type, while a data frame can contain different data types in different columns. Therefore, since the subset contains categorical variables such as "Outcome", "Age Group" and "Indigenous Status" together with numeric variables such as "Year" and "Record Count", R converts all values to character so that the matrix can store them using one common data type.
 
 ## **Create a new Data Frame**
-
 
 ```{r}
 
@@ -181,7 +192,10 @@ new_data
 str(new_data)
 ```
 
-First we created two vectors called "student_id" and "satisfaction" with 10 observations. The student_id variable contains integer values from 1 to 10. The satisfaction variable contains three ordinal categories: "Low", "Medium" and "High". we used factor() with ordered = TRUE to convert satisfaction into an ordered factor and set the levels from Low to Medium to High. We then used data.frame() to combine the two variables into a new data frame.
+First, we created two vectors called "student_id" and "satisfaction" with 10 observations:
+- The student_id variable contains integer values from 1 to 10. 
+- The satisfaction variable contains three ordinal categories: "Low", "Medium" and "High". 
+We used factor() with ordered = TRUE to convert satisfaction into an ordered factor and set the levels from Low to Medium to High and then used data.frame() to combine the two variables into a new data frame.
 
 ```{r}
 
@@ -192,7 +206,7 @@ levels(new_data$satisfaction)
 
 ```
 
-We used str() to check the structure of the new data frame and levels() to check that the satisfaction variable was an ordered factor with the levels in the correct order.
+Next we used str() to check the structure of the new data frame and levels() to check that the satisfaction variable was an ordered factor with the levels in the correct order.
 
 ```{r}
 
@@ -206,7 +220,7 @@ str(new_data)
 
 ```
 
-Finally, we created another numeric vector called "score" with 10 observations and used cbind() to add it to the existing data frame. The final data frame contains 10 observations and 3 variables.
+Finally, we created another numeric vector called "score" with 10 observations and used cbind() to add it to the existing data frame, which outputed the final data frame containg 10 observations and 3 variables.
 <br>
 <br>
 
@@ -218,6 +232,10 @@ Wickham H and Bryan J (2026) *readxl: Read Excel Files*, version 1.5.0, R packag
 Wickham H, François R, Henry L, Müller K and Vaughan D (2026) *dplyr: A Grammar of Data Manipulation*, version 1.2.1, R package, doi:10.32614/CRAN.package.dplyr.
 
 Zhu H (2026) *kableExtra: Construct Complex Table with 'kable' and Pipe Syntax*, version 1.4.1, R package, doi:10.32614/CRAN.package.kableExtra.
+
+GeeksforGeeks (2022). How to find and count missing values in R DataFrame. [online] GeeksforGeeks. Available at: https://www.geeksforgeeks.org/r-language/how-to-find-and-count-missing-values-in-r-dataframe/ [Accessed 17 Aug. 2026].
+
+Crime Statistics Agency Data Tables - Bail statistics - DataVic. (2026). Vic.Gov.Au. https://discover.data.vic.gov.au/dataset/bail-statistics
 
 ##	**Presentation **
 
