@@ -1,0 +1,888 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabularx}
+\usepackage{xltabular}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Data Wrangling (Data Preprocessing)},
+  pdfauthor={Tung Duc Nguyen, Hoang Nguyen},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Data Wrangling (Data Preprocessing)}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Practical assessment 1}
+\author{Tung Duc Nguyen, Hoang Nguyen}
+\date{}
+
+\begin{document}
+\maketitle
+
+\subsection{\texorpdfstring{\textbf{Setup}}{Setup}}\label{setup}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Loading necessary packages:}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\FunctionTok{library}\NormalTok{(magrittr)}
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:kableExtra':
+## 
+##     group_rows
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#citation("dplyr")}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\textbf{Student names, numbers and
+percentage of
+contributions}}{Student names, numbers and percentage of contributions}}\label{student-names-numbers-and-percentage-of-contributions}
+
+\begin{table}
+\centering
+\caption{\label{tab:unnamed-chunk-2}Group information}
+\centering
+\begin{tabular}[t]{l|l|l}
+\hline
+Student name & Student number & Percentage of contribution\\
+\hline
+Tung Duc Nguyen & 4275232 & 50\\
+\hline
+Hoang Nguyen & 4280335 & 50\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{\texorpdfstring{\textbf{Data
+Description}}{Data Description}}\label{data-description}
+
+Data set: Bail Justice and bail applications by outcome, age group and
+Indigenous status --- data ending March 2026
+
+Source: Crime Statistics Agency (CSA) Victoria, published via the
+Victorian Government's open data platform
+(\url{https://discover.data.vic.gov.au/dataset/bail-statistics})
+
+The data set records the outcomes of bail applications heard by a Bail
+Justice in Victoria, organized by age group and Indigenous status,
+reported as 12-month totals ending each March from 2017 to 2026.
+
+Variables:
+
+\begin{itemize}
+\tightlist
+\item
+  Year -- the year the 12-month reporting period ends
+\item
+  Year ending -- the month the period ends
+\item
+  Data Source -- the agency/court the data was recorded by
+\item
+  Outcome -- the result of the bail application (Bail granted, Bail
+  refused, No application)
+\item
+  Age Group -- Adult 18 years and over, Child under 18 years, or Total
+\item
+  Indigenous Status -- Aboriginal and/or Torres Strait Islander,
+  Non-Indigenous, or Total People
+\item
+  Record Count -- the number of people/applications matching that
+  combination of Outcome, Age Group and Indigenous Status for that year
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{Read/Import
+Data}}{Read/Import Data}}\label{readimport-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Import the data, provide your R codes here.}
+\FunctionTok{library}\NormalTok{(readxl)}
+\NormalTok{bail\_justice\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_xlsx}\NormalTok{(}\StringTok{"Bail\_Justice\_Data\_Tables\_Bail\_Visualisation\_Year\_Ending\_March\_2026.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"Table 01"}\NormalTok{)}
+\FunctionTok{class}\NormalTok{(bail\_justice\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "tbl_df"     "tbl"        "data.frame"
+\end{verbatim}
+
+First we ran the library(readxl) to load the package ``readxl'' into our
+session so we can use its function: ``read\_xlsx'' to read our dataset
+from an excel file.
+
+Then we ran ``read\_xlsx'' to read our file
+``Bail\_Justice\_Data\_Tables\_Bail\_Visualisation\_Year\_Ending\_March\_2026.xlsx'',
+specifically sheet ``Table 01'' as that is where the data table is,
+while other sheets contain unusable data. We assigned the result to a
+new object named: bail\_justice\_data, which is now a dataframe in our R
+environment. To double check that fact, we also ran the class function
+on it.
+
+\subsection{\texorpdfstring{\textbf{Inspect and
+Understand}}{Inspect and Understand}}\label{inspect-and-understand}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check the overall structure and object type of the dataset}
+\FunctionTok{str}\NormalTok{(bail\_justice\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tibble [159 x 7] (S3: tbl_df/tbl/data.frame)
+##  $ Year             : num [1:159] 2026 2026 2026 2026 2026 ...
+##  $ Year ending      : chr [1:159] "March" "March" "March" "March" ...
+##  $ Data Source      : chr [1:159] "Bail Justice" "Bail Justice" "Bail Justice" "Bail Justice" ...
+##  $ Outcome          : chr [1:159] "Bail granted" "Bail granted" "Bail granted" "Bail granted" ...
+##  $ Age Group        : chr [1:159] "Adult 18 years and over" "Adult 18 years and over" "Adult 18 years and over" "Child under 18 years" ...
+##  $ Indigenous Status: chr [1:159] "Aboriginal and/or Torres Strait Islander" "Non-Indigenous" "Total People" "Aboriginal and/or Torres Strait Islander" ...
+##  $ Record Count     : num [1:159] 77 43 120 2 15 17 79 58 137 855 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(bail\_justice\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "tbl_df"     "tbl"        "data.frame"
+\end{verbatim}
+
+Firstly for the inspection, we ran str() to get an overview of the
+dataset's structure, which shows us the total number of observations and
+variables, and for each variables it also shows the data type with a
+preview of the first few values. Additionally, we also ran class() to
+confirm that the dataset is a dataframe.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Preview the first and last rows of the dataset}
+\FunctionTok{head}\NormalTok{(bail\_justice\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 7
+##    Year `Year ending` `Data Source` Outcome      `Age Group` `Indigenous Status`
+##   <dbl> <chr>         <chr>         <chr>        <chr>       <chr>              
+## 1  2026 March         Bail Justice  Bail granted Adult 18 y~ Aboriginal and/or ~
+## 2  2026 March         Bail Justice  Bail granted Adult 18 y~ Non-Indigenous     
+## 3  2026 March         Bail Justice  Bail granted Adult 18 y~ Total People       
+## 4  2026 March         Bail Justice  Bail granted Child unde~ Aboriginal and/or ~
+## 5  2026 March         Bail Justice  Bail granted Child unde~ Non-Indigenous     
+## 6  2026 March         Bail Justice  Bail granted Child unde~ Total People       
+## # i 1 more variable: `Record Count` <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(bail\_justice\_data, }\AttributeTok{n =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 7
+##     Year `Year ending` `Data Source` Outcome     `Age Group` `Indigenous Status`
+##    <dbl> <chr>         <chr>         <chr>       <chr>       <chr>              
+##  1  2026 March         Bail Justice  Bail grant~ Adult 18 y~ Aboriginal and/or ~
+##  2  2026 March         Bail Justice  Bail grant~ Adult 18 y~ Non-Indigenous     
+##  3  2026 March         Bail Justice  Bail grant~ Adult 18 y~ Total People       
+##  4  2026 March         Bail Justice  Bail grant~ Child unde~ Aboriginal and/or ~
+##  5  2026 March         Bail Justice  Bail grant~ Child unde~ Non-Indigenous     
+##  6  2026 March         Bail Justice  Bail grant~ Child unde~ Total People       
+##  7  2026 March         Bail Justice  Bail grant~ Total       Aboriginal and/or ~
+##  8  2026 March         Bail Justice  Bail grant~ Total       Non-Indigenous     
+##  9  2026 March         Bail Justice  Bail grant~ Total       Total People       
+## 10  2026 March         Bail Justice  Bail refus~ Adult 18 y~ Aboriginal and/or ~
+## # i 1 more variable: `Record Count` <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tail}\NormalTok{(bail\_justice\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 7
+##    Year `Year ending` `Data Source` Outcome      `Age Group` `Indigenous Status`
+##   <dbl> <chr>         <chr>         <chr>        <chr>       <chr>              
+## 1  2017 March         Bail Justice  Bail granted Adult 18 y~ Total People       
+## 2  2017 March         Bail Justice  Bail granted Child unde~ Total People       
+## 3  2017 March         Bail Justice  Bail granted Total       Total People       
+## 4  2017 March         Bail Justice  Bail refused Adult 18 y~ Total People       
+## 5  2017 March         Bail Justice  Bail refused Child unde~ Total People       
+## 6  2017 March         Bail Justice  Bail refused Total       Total People       
+## # i 1 more variable: `Record Count` <dbl>
+\end{verbatim}
+
+We ran head() to preview the first 6 rows of our dataset by default and
+then ran it again with n = 10 to view the first 10 rows for a slightly
+larger data sample. Afterwards we ran tail() to preview the last six
+rows of the dataset to check that both the head and tail had been
+imported correctly.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check for missing values}
+\FunctionTok{colSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(bail\_justice\_data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Year       Year ending       Data Source           Outcome 
+##                 0                 0                 0                 0 
+##         Age Group Indigenous Status      Record Count 
+##                 0                 0                 0
+\end{verbatim}
+
+We used colSums(is.na()) to check for missing values in each individual
+column. The table presented zero count of missing values so there are no
+missing values in the data set.
+
+To achieve this, We referred to a GeeksforGeeks tutorial on finding and
+counting missing values in R to confirm the correct functions to use for
+this check
+(\url{https://www.geeksforgeeks.org/r-language/how-to-find-and-count-missing-values-in-r-dataframe/})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check the data type of individual variables}
+\FunctionTok{class}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\NormalTok{Outcome)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\NormalTok{Year)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is.numeric}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\NormalTok{Year)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is.numeric}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is.numeric}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Data Source}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+We ran class() on the Outcome and Record Count columns specifically to
+check the data type of each and then used typeof() on Year and Record
+Count to check how R is storing these numeric variables. Finally, we
+used is.numeric() to explicitly test whether Year, Record Count, and
+Data Source are numeric variables. This confirmed that Year and Record
+Count are numeric (returning TRUE), while Data Source is not (returning
+FALSE), since it's a text variable rather than a numeric one.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check the attributes (metadata) of the dataset}
+\FunctionTok{attributes}\NormalTok{(bail\_justice\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $names
+## [1] "Year"              "Year ending"       "Data Source"      
+## [4] "Outcome"           "Age Group"         "Indigenous Status"
+## [7] "Record Count"     
+## 
+## $row.names
+##   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+##  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+##  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
+##  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
+##  [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
+##  [91]  91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 106 107 108
+## [109] 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126
+## [127] 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144
+## [145] 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159
+## 
+## $class
+## [1] "tbl_df"     "tbl"        "data.frame"
+\end{verbatim}
+
+We ran attributes() on our data frame to show the column names, the row
+names, and the class of the object, which is useful for confirming the
+overall shape and labeling of the dataset beyond just the individual
+variable types.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Convert categorical variables from character to factor}
+\NormalTok{bail\_justice\_data[}\FunctionTok{c}\NormalTok{(}\StringTok{"Outcome"}\NormalTok{, }\StringTok{"Age Group"}\NormalTok{, }\StringTok{"Indigenous Status"}\NormalTok{, }\StringTok{"Data Source"}\NormalTok{)] }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(bail\_justice\_data[}\FunctionTok{c}\NormalTok{(}\StringTok{"Outcome"}\NormalTok{, }\StringTok{"Age Group"}\NormalTok{, }\StringTok{"Indigenous Status"}\NormalTok{, }\StringTok{"Data Source"}\NormalTok{)], as.factor)}
+\FunctionTok{str}\NormalTok{(bail\_justice\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tibble [159 x 7] (S3: tbl_df/tbl/data.frame)
+##  $ Year             : num [1:159] 2026 2026 2026 2026 2026 ...
+##  $ Year ending      : chr [1:159] "March" "March" "March" "March" ...
+##  $ Data Source      : Factor w/ 1 level "Bail Justice": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Outcome          : Factor w/ 3 levels "Bail granted",..: 1 1 1 1 1 1 1 1 1 2 ...
+##  $ Age Group        : Factor w/ 3 levels "Adult 18 years and over",..: 1 1 1 2 2 2 3 3 3 1 ...
+##  $ Indigenous Status: Factor w/ 3 levels "Aboriginal and/or Torres Strait Islander",..: 1 2 3 1 2 3 1 2 3 1 ...
+##  $ Record Count     : num [1:159] 77 43 120 2 15 17 79 58 137 855 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{levels}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Age Group}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Adult 18 years and over" "Child under 18 years"   
+## [3] "Total"
+\end{verbatim}
+
+Since Outcome, Age Group, Indigenous Status, and Data Source are all
+categorical variables that were imported as character type, we used
+lapply() to apply the as.factor() function to all four columns and
+reassign them back into the data frame. This converts each of them from
+character to factor, which is more appropriate for categorical data. we
+then ran str() again to confirm the four columns are now listed as
+factors instead of characters, and ran levels() on the Age Group column
+specifically to check what categories exist now that it has been
+converted, confirming the conversion worked.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Convert Year from numeric to integer}
+\NormalTok{bail\_justice\_data}\SpecialCharTok{$}\NormalTok{Year }\OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\NormalTok{Year)}
+\NormalTok{bail\_justice\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \FunctionTok{as.integer}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{)}
+\FunctionTok{typeof}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\NormalTok{Year)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(bail\_justice\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+Finally, we converted the Year column and the Record Count column from
+numeric (double) to integer using as.integer(), since they are really
+whole-numbers rather than continuous measurements, therefore integer is
+the more appropriate and accurate type for them we then ran typeof()
+again to confirm the conversions were successful and it now shows as
+``integer'' rather than ``double''.
+
+\subsection{\texorpdfstring{\textbf{Summary Statistics
+}}{Summary Statistics }}\label{summary-statistics}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summary statistics, provide R codes here.}
+\CommentTok{\#Filter out "Total" (Age Group) and "Total People" (Indigenous Status)}
+\NormalTok{bail\_justice\_data }\OtherTok{\textless{}{-}}\NormalTok{ bail\_justice\_data }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{filter}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Age Group}\StringTok{\textasciigrave{}} \SpecialCharTok{!=} \StringTok{"Total"}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{Indigenous Status}\StringTok{\textasciigrave{}} \SpecialCharTok{!=} \StringTok{"Total People"}\NormalTok{)}
+\NormalTok{summary\_stats }\OtherTok{\textless{}{-}}\NormalTok{ bail\_justice\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Outcome) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{Median =} \FunctionTok{median}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{Q1 =} \FunctionTok{quantile}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{Q3 =} \FunctionTok{quantile}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{, }\FloatTok{0.75}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{SD =} \FunctionTok{sd}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Record Count}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{summary\_stats}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 6
+##   Outcome         Mean Median    Q1    Q3    SD
+##   <fct>          <dbl>  <dbl> <dbl> <dbl> <dbl>
+## 1 Bail granted    63.0   56    33.5  100.  44.7
+## 2 Bail refused   480.   453   131.   788. 385. 
+## 3 No application  73.1   50.5  24.8  120.  63.9
+\end{verbatim}
+
+Before generating summary statistics, we filtered out the `Total' (Age
+Group) and `Total People' (Indigenous Status) rows, as they are
+subtotals of the other categories rather than independent values, and
+including them would double-count people and mix these less detailed
+value into the calculation and reduces the quality of our data.
+
+To start,we grouped the bail justice data by the categorical variable
+``Outcome'' and calculated the summary statistics for the numeric
+variable ``Record Count''. Then, We used mean() to find the average
+record count, median() to find the middle value, quantile() to calculate
+the first and third quartiles, and sd() to find the standard deviation
+for each outcome. Additionally, We also used na.rm = TRUE so any missing
+values would be ignored during the calculations.
+
+From the output, we found that `Bail refused' has the highest mean
+Record Count of approximately 479.92 and also the highest median of 453,
+while having the highest standard deviation of approximately 384.78, all
+of which shows that the Record Count for Bail refused varies
+considerably more than the other outcomes. Additionally, `Bail granted'
+has the lowest mean Record Count of approximately 62.96 and the lowest
+standard deviation of approximately 44.66.''
+
+\subsection{\texorpdfstring{\textbf{Subsetting}}{Subsetting}}\label{subsetting}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Subset your data and convert it to a matrix, provide R codes here.}
+\NormalTok{bail\_subset }\OtherTok{\textless{}{-}}\NormalTok{ bail\_justice\_data[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, ]}
+\NormalTok{bail\_subset}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 7
+##     Year `Year ending` `Data Source` Outcome     `Age Group` `Indigenous Status`
+##    <int> <chr>         <fct>         <fct>       <fct>       <fct>              
+##  1  2026 March         Bail Justice  Bail grant~ Adult 18 y~ Aboriginal and/or ~
+##  2  2026 March         Bail Justice  Bail grant~ Adult 18 y~ Non-Indigenous     
+##  3  2026 March         Bail Justice  Bail grant~ Child unde~ Aboriginal and/or ~
+##  4  2026 March         Bail Justice  Bail grant~ Child unde~ Non-Indigenous     
+##  5  2026 March         Bail Justice  Bail refus~ Adult 18 y~ Aboriginal and/or ~
+##  6  2026 March         Bail Justice  Bail refus~ Adult 18 y~ Non-Indigenous     
+##  7  2026 March         Bail Justice  Bail refus~ Child unde~ Aboriginal and/or ~
+##  8  2026 March         Bail Justice  Bail refus~ Child unde~ Non-Indigenous     
+##  9  2026 March         Bail Justice  No applica~ Adult 18 y~ Aboriginal and/or ~
+## 10  2026 March         Bail Justice  No applica~ Adult 18 y~ Non-Indigenous     
+## # i 1 more variable: `Record Count` <int>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bail\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(bail\_subset)}
+\NormalTok{bail\_matrix}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Year   Year ending Data Source    Outcome         
+##  [1,] "2026" "March"     "Bail Justice" "Bail granted"  
+##  [2,] "2026" "March"     "Bail Justice" "Bail granted"  
+##  [3,] "2026" "March"     "Bail Justice" "Bail granted"  
+##  [4,] "2026" "March"     "Bail Justice" "Bail granted"  
+##  [5,] "2026" "March"     "Bail Justice" "Bail refused"  
+##  [6,] "2026" "March"     "Bail Justice" "Bail refused"  
+##  [7,] "2026" "March"     "Bail Justice" "Bail refused"  
+##  [8,] "2026" "March"     "Bail Justice" "Bail refused"  
+##  [9,] "2026" "March"     "Bail Justice" "No application"
+## [10,] "2026" "March"     "Bail Justice" "No application"
+##       Age Group                 Indigenous Status                         
+##  [1,] "Adult 18 years and over" "Aboriginal and/or Torres Strait Islander"
+##  [2,] "Adult 18 years and over" "Non-Indigenous"                          
+##  [3,] "Child under 18 years"    "Aboriginal and/or Torres Strait Islander"
+##  [4,] "Child under 18 years"    "Non-Indigenous"                          
+##  [5,] "Adult 18 years and over" "Aboriginal and/or Torres Strait Islander"
+##  [6,] "Adult 18 years and over" "Non-Indigenous"                          
+##  [7,] "Child under 18 years"    "Aboriginal and/or Torres Strait Islander"
+##  [8,] "Child under 18 years"    "Non-Indigenous"                          
+##  [9,] "Adult 18 years and over" "Aboriginal and/or Torres Strait Islander"
+## [10,] "Adult 18 years and over" "Non-Indigenous"                          
+##       Record Count
+##  [1,] " 77"       
+##  [2,] " 43"       
+##  [3,] "  2"       
+##  [4,] " 15"       
+##  [5,] "855"       
+##  [6,] "548"       
+##  [7,] " 41"       
+##  [8,] "141"       
+##  [9,] "185"       
+## [10,] "112"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(bail\_matrix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  chr [1:10, 1:7] "2026" "2026" "2026" "2026" "2026" "2026" "2026" "2026" ...
+##  - attr(*, "dimnames")=List of 2
+##   ..$ : NULL
+##   ..$ : chr [1:7] "Year" "Year ending" "Data Source" "Outcome" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(bail\_matrix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "matrix" "array"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(bail\_matrix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+Firstly, we used {[}1:10, {]} to subset the first 10 observations from
+the bail justice data while keeping all variables, then we used
+as.matrix() to convert the subsetted data frame into a matrix.
+
+From the output, we found that the matrix was a character matrix. This
+happened because a matrix can only contain one data type, while a data
+frame can contain different data types in different columns. Therefore,
+since the subset contains categorical variables such as ``Outcome'',
+``Age Group'' and ``Indigenous Status'' together with numeric variables
+such as ``Year'' and ``Record Count'', R converts all values to
+character so that the matrix can store them using one common data type.
+
+\subsection{\texorpdfstring{\textbf{Create a new Data
+Frame}}{Create a new Data Frame}}\label{create-a-new-data-frame}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a new data frame, provide R codes here.}
+
+\NormalTok{student\_id }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}
+\NormalTok{satisfaction }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Low"}\NormalTok{, }\StringTok{"Medium"}\NormalTok{, }\StringTok{"High"}\NormalTok{, }\StringTok{"Medium"}\NormalTok{, }\StringTok{"Low"}\NormalTok{,}\StringTok{"High"}\NormalTok{, }\StringTok{"Medium"}\NormalTok{, }\StringTok{"High"}\NormalTok{, }\StringTok{"Low"}\NormalTok{, }\StringTok{"Medium"}\NormalTok{)}
+\NormalTok{satisfaction }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(satisfaction,}
+                       \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Low"}\NormalTok{, }\StringTok{"Medium"}\NormalTok{, }\StringTok{"High"}\NormalTok{),}
+                       \AttributeTok{ordered =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{new\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(student\_id, satisfaction)}
+\NormalTok{new\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    student_id satisfaction
+## 1           1          Low
+## 2           2       Medium
+## 3           3         High
+## 4           4       Medium
+## 5           5          Low
+## 6           6         High
+## 7           7       Medium
+## 8           8         High
+## 9           9          Low
+## 10         10       Medium
+\end{verbatim}
+
+First, we created two vectors called ``student\_id'' and
+``satisfaction'' with 10 observations: - The student\_id variable
+contains integer values from 1 to 10. - The satisfaction variable
+contains three ordinal categories: ``Low'', ``Medium'' and ``High''. We
+used factor() with ordered = TRUE to convert satisfaction into an
+ordered factor and set the levels from Low to Medium to High and then
+used data.frame() to combine the two variables into a new data frame.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check the structure and ordinal levels}
+
+\FunctionTok{str}\NormalTok{(new\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    10 obs. of  2 variables:
+##  $ student_id  : int  1 2 3 4 5 6 7 8 9 10
+##  $ satisfaction: Ord.factor w/ 3 levels "Low"<"Medium"<..: 1 2 3 2 1 3 2 3 1 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{levels}\NormalTok{(new\_data}\SpecialCharTok{$}\NormalTok{satisfaction)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Low"    "Medium" "High"
+\end{verbatim}
+
+Next we used str() to check the structure of the new data frame and
+levels() to check that the satisfaction variable was an ordered factor
+with the levels in the correct order.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create and add a numeric variable}
+\NormalTok{hours\_studied }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{9}\NormalTok{)}
+\NormalTok{new\_data }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(new\_data, hours\_studied)}
+\NormalTok{new\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    student_id satisfaction hours_studied
+## 1           1          Low             8
+## 2           2       Medium            12
+## 3           3         High            15
+## 4           4       Medium            10
+## 5           5          Low             6
+## 6           6         High            18
+## 7           7       Medium            11
+## 8           8         High            14
+## 9           9          Low             7
+## 10         10       Medium             9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(new\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    10 obs. of  3 variables:
+##  $ student_id   : int  1 2 3 4 5 6 7 8 9 10
+##  $ satisfaction : Ord.factor w/ 3 levels "Low"<"Medium"<..: 1 2 3 2 1 3 2 3 1 2
+##  $ hours_studied: num  8 12 15 10 6 18 11 14 7 9
+\end{verbatim}
+
+Finally, we created another numeric vector called ``hours\_studied''
+with 10 observations and used cbind() to add it to the existing data
+frame, which outputed the final data frame containg 10 observations and
+3 variables.
+
+\subsection{\texorpdfstring{\textbf{References}}{References}}\label{references}
+
+Bache SM and Wickham H (2026) \emph{magrittr: A Forward-Pipe Operator
+for R}, version 2.0.5, R package,
+\url{doi:10.32614/CRAN.package.magrittr}.
+
+Wickham H and Bryan J (2026) \emph{readxl: Read Excel Files}, version
+1.5.0, R package, \url{doi:10.32614/CRAN.package.readxl}.
+
+Wickham H, François R, Henry L, Müller K and Vaughan D (2026)
+\emph{dplyr: A Grammar of Data Manipulation}, version 1.2.1, R package,
+\url{doi:10.32614/CRAN.package.dplyr}.
+
+Zhu H (2026) \emph{kableExtra: Construct Complex Table with `kable' and
+Pipe Syntax}, version 1.4.1, R package,
+\url{doi:10.32614/CRAN.package.kableExtra}.
+
+GeeksforGeeks (2022). How to find and count missing values in R
+DataFrame. {[}online{]} GeeksforGeeks. Available at:
+\url{https://www.geeksforgeeks.org/r-language/how-to-find-and-count-missing-values-in-r-dataframe/}
+{[}Accessed 17 Aug.~2026{]}.
+
+Crime Statistics Agency Data Tables - Bail statistics - DataVic. (2026).
+Vic.Gov.Au.
+\url{https://discover.data.vic.gov.au/dataset/bail-statistics}
+
+TUNG1205 (2026). Commits ·
+TUNG1205/bail-outcomes-in-victoria--age-and-indigenous-status-trends.
+{[}online{]} GitHub. Available at:
+\url{https://github.com/TUNG1205/Bail-Outcomes-in-Victoria--Age-and-Indigenous-Status-Trends/commits/main/}
+{[}Accessed 20 Aug.~2026{]}.
+
+\subsection{\texorpdfstring{\textbf{Presentation
+}}{Presentation }}\label{presentation}
+
+\href{https://rmit-arc.instructuremedia.com/embed/d76b8ee7-93f6-4c7a-8230-d336d4d8617c}{Tung's
+Presentation}
+
+\href{https://rmit-arc.instructuremedia.com/embed/a7c0b929-3974-4bcb-80c9-3f5f961197b7}{Hoang's
+Presentation}
+
+\end{document}

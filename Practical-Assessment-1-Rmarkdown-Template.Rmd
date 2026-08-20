@@ -119,7 +119,7 @@ bail_justice_data[c("Outcome", "Age Group", "Indigenous Status", "Data Source")]
 str(bail_justice_data)
 levels(bail_justice_data$`Age Group`)
 ```
-Since Outcome, Age Group, Indigenous Status, and Data Source are all categorical variables that were imported as character type, we used lapply() to apply the as.factor() function to all four columns and reassign them back into the data frame. This converts each of them from character to factor, which is more appropriate for categorical data. we then ran str() again to confirm the four columns are now listed as factors instead of characters, and ran levels() on the Age Group column specifically to check what categories exist now that it has been converted, confirming the conversion worked.
+Since Outcome, Age Group, Indigenous Status, and Data Source are all categorical variables that were imported as character type, we used lapply() to apply the as.factor() function to all four columns and reassign them back into the data frame. This converts each of them from character to factor, which is more appropriate for categorical data. We then ran str() again to confirm the four columns are now listed as factors instead of characters, and ran levels() on the Age Group column specifically to check what categories exist now that it has been converted, confirming the conversion worked.
 
 ```{r}
 # Convert Year from numeric to integer
@@ -150,9 +150,9 @@ summary_stats <- bail_justice_data %>%
 summary_stats
 ```
 
-Before generating summary statistics, we filtered out the 'Total' (Age Group) and 'Total People' (Indigenous Status) rows, as they are subtotals of the other categories rather than independent values, and including them would double-count people and mix these less detailed value into the calculation and reduces the quality of our data.
+Before generating summary statistics, we filtered out the 'Total' (Age Group) and 'Total People' (Indigenous Status) rows, as they are subtotals of the other categories rather than independent values, and including them would double-count people and mix these less detailed values into the calculation and reduce the quality of our data.
 
-To start,we grouped the bail justice data by the categorical variable "Outcome" and calculated the summary statistics for the numeric variable "Record Count". Then, We used mean() to find the average record count, median() to find the middle value, quantile() to calculate the first and third quartiles, and sd() to find the standard deviation for each outcome. Additionally, We also used na.rm = TRUE so any missing values would be ignored during the calculations.
+To start, we grouped the bail justice data by the categorical variable "Outcome" and calculated the summary statistics for the numeric variable "Record Count". Then, We used mean() to find the average record count, median() to find the middle value, quantile() to calculate the first and third quartiles, and sd() to find the standard deviation for each outcome. Additionally, We also used na.rm = TRUE so any missing values would be ignored during the calculations.
 
 From the output, we found that 'Bail refused' has the highest mean Record Count of approximately 479.92 and also the highest median of 453, while having the highest standard deviation of approximately 384.78, all of which shows that the Record Count for Bail refused varies considerably more than the other outcomes. Additionally, 'Bail granted' has the lowest mean Record Count of approximately 62.96 and the lowest standard deviation of approximately 44.66."
 
@@ -216,7 +216,7 @@ str(new_data)
 
 ```
 
-Finally, we created another numeric vector called "hours_studied" with 10 observations and used cbind() to add it to the existing data frame, which outputed the final data frame containg 10 observations and 3 variables.
+Finally, we created another numeric vector called "hours_studied" with 10 observations and used cbind() to add it to the existing data frame, which output the final data frame containing 10 observations and 3 variables.
 <br>
 <br>
 
@@ -239,4 +239,3 @@ TUNG1205 (2026). Commits · TUNG1205/bail-outcomes-in-victoria--age-and-indigeno
 [Tung's Presentation](https://rmit-arc.instructuremedia.com/embed/d76b8ee7-93f6-4c7a-8230-d336d4d8617c)
 
 [Hoang's Presentation](https://rmit-arc.instructuremedia.com/embed/a7c0b929-3974-4bcb-80c9-3f5f961197b7)
-
