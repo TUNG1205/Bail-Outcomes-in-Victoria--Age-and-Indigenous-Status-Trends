@@ -35,9 +35,11 @@ s<- data.frame(cbind(na,no,pc))
 colnames(s)<- c("Student name", "Student number", "Percentage of contribution")
 
 s %>% kbl(caption = "Group information") %>%
-  kable_classic(full_width = F, html_font = "Cambria")
-
+  kable_classic(full_width = F, html_font = "Cambria")%>%
+#Keep the group infromation table within this section
+  kable_styling(latex_options = "HOLD_position")
 ```
+
 
 ## **Data Description**
 
@@ -60,9 +62,11 @@ Variables:
 ## **Read/Import Data**
 
 ```{r}
-# Import the data, provide your R codes here.
+# Import the data
 library(readxl)
-bail_justice_data <- read_xlsx("Bail_Justice_Data_Tables_Bail_Visualisation_Year_Ending_March_2026.xlsx", sheet = "Table 01")
+bail_justice_data<-read_xlsx(
+"Bail_Justice_Data_Tables_Bail_Visualisation_Year_Ending_March_2026.xlsx", 
+sheet = "Table 01")
 class(bail_justice_data)
 ```
 First we ran the library(readxl) to load the package "readxl" into our session so we can use its function: "read_xlsx" to read our dataset from an excel file. 
@@ -115,7 +119,9 @@ We ran attributes() on our data frame to show the column names, the row names, a
 
 ```{r}
 # Convert categorical variables from character to factor
-bail_justice_data[c("Outcome", "Age Group", "Indigenous Status", "Data Source")] <- lapply(bail_justice_data[c("Outcome", "Age Group", "Indigenous Status", "Data Source")], as.factor)
+bail_justice_data[c("Outcome", 
+"Age Group", "Indigenous Status", "Data Source")]<-lapply(bail_justice_data[c("Outcome",
+"Age Group", "Indigenous Status", "Data Source")], as.factor)
 str(bail_justice_data)
 levels(bail_justice_data$`Age Group`)
 ```
@@ -133,8 +139,6 @@ Finally, we converted the Year column and the Record Count column from numeric (
 ## **Summary Statistics **
 
 ```{r}
-
-# Summary statistics, provide R codes here.
 #Filter out "Total" (Age Group) and "Total People" (Indigenous Status)
 bail_justice_data <- bail_justice_data %>%
 filter(`Age Group` != "Total", `Indigenous Status` != "Total People")
@@ -160,7 +164,7 @@ From the output, we found that 'Bail refused' has the highest mean Record Count 
 
 ```{r}
 
-# Subset your data and convert it to a matrix, provide R codes here.
+# Subset data and convert it to a matrix
 bail_subset <- bail_justice_data[1:10, ]
 bail_subset
 bail_matrix <- as.matrix(bail_subset)
@@ -180,14 +184,12 @@ From the output, we found that the matrix was a character matrix. This happened 
 ```{r}
 
 # Create a new data frame, provide R codes here.
-
 student_id <- 1:10
 satisfaction <- c("Low", "Medium", "High", "Medium", "Low","High", "Medium", "High", "Low", "Medium")
-satisfaction <- factor(satisfaction,
-                       levels = c("Low", "Medium", "High"),
-                       ordered = TRUE)
+satisfaction <- factor(satisfaction,levels = c("Low", "Medium", "High"),ordered = TRUE)
 new_data <- data.frame(student_id, satisfaction)
 new_data
+```
 ```
 
 First, we created two vectors called "student_id" and "satisfaction" with 10 observations:
@@ -198,10 +200,8 @@ We used factor() with ordered = TRUE to convert satisfaction into an ordered fac
 ```{r}
 
 # Check the structure and ordinal levels
-
 str(new_data)
 levels(new_data$satisfaction)
-
 ```
 
 Next we used str() to check the structure of the new data frame and levels() to check that the satisfaction variable was an ordered factor with the levels in the correct order.
@@ -213,7 +213,6 @@ hours_studied <- c(8, 12, 15, 10, 6, 18, 11, 14, 7, 9)
 new_data <- cbind(new_data, hours_studied)
 new_data
 str(new_data)
-
 ```
 
 Finally, we created another numeric vector called "hours_studied" with 10 observations and used cbind() to add it to the existing data frame, which outputed the final data frame containg 10 observations and 3 variables.
@@ -221,22 +220,27 @@ Finally, we created another numeric vector called "hours_studied" with 10 observ
 <br>
 
 ## **References**
-Bache SM and Wickham H (2026) *magrittr: A Forward-Pipe Operator for R*, version 2.0.5, R package, doi:10.32614/CRAN.package.magrittr.
+Bache SM & Wickham H (2026) Magrittr: A forward-pipe operator for R,
 
-Wickham H and Bryan J (2026) *readxl: Read Excel Files*, version 1.5.0, R package, doi:10.32614/CRAN.package.readxl.
+Crime statistics Agency Data tables - bail statistics - DataVic (2026), Vic.gov.au, accessed August 17, 2026. https://discover.data.vic.gov.au/dataset/bail-statistics
 
-Wickham H, François R, Henry L, Müller K and Vaughan D (2026) *dplyr: A Grammar of Data Manipulation*, version 1.2.1, R package, doi:10.32614/CRAN.package.dplyr.
+GeeksforGeeks (2022) How to find and count missing values in R DataFrame, accessed August 17, 2026. https://www.geeksforgeeks.org/r-language/how-to-find-and-count-missing-values-in-r-dataframe/
 
-Zhu H (2026) *kableExtra: Construct Complex Table with 'kable' and Pipe Syntax*, version 1.4.1, R package, doi:10.32614/CRAN.package.kableExtra.
+TUNG1205 (2017) GitHub - TUNG1205/bail-outcomes-in-victoria--age-and-indigenous-status-trends: This project analyses bail application outcomes recorded by Victoria’s bail justices from 2017 to 2026, broken down by age group and indigenous status It examines how bail decisions vary across these categories over a decade, using record count as the key numeric measure, GitHub, accessed August 20, 2026. https://github.com/TUNG1205/Bail-Outcomes-in-Victoria--Age-and-Indigenous-Status-Trends
 
-GeeksforGeeks (2022). How to find and count missing values in R DataFrame. [online] GeeksforGeeks. Available at: https://www.geeksforgeeks.org/r-language/how-to-find-and-count-missing-values-in-r-dataframe/ [Accessed 17 Aug. 2026].
+Wickham H & Bryan J (2026) READXL: Read excel files, CRAN Package Documentation
 
-Crime Statistics Agency Data Tables - Bail statistics - DataVic. (2026). Vic.Gov.Au. https://discover.data.vic.gov.au/dataset/bail-statistics
+Wickham H, François R, Henry L, Müller K & Vaughan D (2026) DPLYR: A grammar of data manipulation,
 
-TUNG1205 (2026). Commits · TUNG1205/bail-outcomes-in-victoria--age-and-indigenous-status-trends. [online] GitHub. Available at: https://github.com/TUNG1205/Bail-Outcomes-in-Victoria--Age-and-Indigenous-Status-Trends/commits/main/ [Accessed 20 Aug. 2026].
+Zhu H (2026) kableExtra: Construct complex table with “Kable” and pipe syntax,
 
 ##	**Presentation **
+
 [Tung's Presentation](https://rmit-arc.instructuremedia.com/embed/d76b8ee7-93f6-4c7a-8230-d336d4d8617c)
 
+link: https://rmit-arc.instructuremedia.com/embed/d76b8ee7-93f6-4c7a-8230-d336d4d8617c
+
 [Hoang's Presentation](https://rmit-arc.instructuremedia.com/embed/a7c0b929-3974-4bcb-80c9-3f5f961197b7)
+
+link: https://rmit-arc.instructuremedia.com/embed/a7c0b929-3974-4bcb-80c9-3f5f961197b7
 
