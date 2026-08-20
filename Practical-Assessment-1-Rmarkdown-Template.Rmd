@@ -4,8 +4,8 @@ author: "Tung Duc Nguyen, Hoang Nguyen"
 subtitle: Practical assessment 1
 date: ""
 output:
-  html_notebook: default 
   pdf_document: default
+  html_notebook: default 
   html_document:
     df_print: paged
 ---
@@ -41,7 +41,7 @@ s %>% kbl(caption = "Group information") %>%
 
 ## **Data Description**
 
-Data set: Bail Justice bail applications by outcome, age group and Indigenous status — data ending March 2026
+Data set: Bail Justice and bail applications by outcome, age group and Indigenous status — data ending March 2026
 
 Source: Crime Statistics Agency (CSA) Victoria, published via the Victorian Government's open data platform (https://discover.data.vic.gov.au/dataset/bail-statistics)
 
@@ -85,7 +85,7 @@ head(bail_justice_data)
 head(bail_justice_data, n = 10)
 tail(bail_justice_data)
 ```
-We ran head() to preview the first 6 rows of our dataset by default and then ran it again with n = 10 to view the first 10 rows for a slightly larger data sample. Afterwards we ran tail() to preview the last six rows of the dataset to check that both the head and tail had beenn imported correctly.
+We ran head() to preview the first 6 rows of our dataset by default and then ran it again with n = 10 to view the first 10 rows for a slightly larger data sample. Afterwards we ran tail() to preview the last six rows of the dataset to check that both the head and tail had been imported correctly.
 
 ```{r}
 # Check for missing values
@@ -128,7 +128,7 @@ bail_justice_data$`Record Count` <- as.integer(bail_justice_data$`Record Count`)
 typeof(bail_justice_data$Year)
 typeof(bail_justice_data$`Record Count`)
 ```
-Finally, we converted the Year column and the Record Count column from numeric (double) to integer using as.integer(), since they are really whole-numbes rather than continuous measurements, therefore integer is the more appropriate and accurate type for them we then ran typeof() again to confirm the conversions were successful and it now shows as "integer" rather than "double".
+Finally, we converted the Year column and the Record Count column from numeric (double) to integer using as.integer(), since they are really whole-numbers rather than continuous measurements, therefore integer is the more appropriate and accurate type for them we then ran typeof() again to confirm the conversions were successful and it now shows as "integer" rather than "double".
 
 ## **Summary Statistics **
 
@@ -233,9 +233,10 @@ GeeksforGeeks (2022). How to find and count missing values in R DataFrame. [onli
 
 Crime Statistics Agency Data Tables - Bail statistics - DataVic. (2026). Vic.Gov.Au. https://discover.data.vic.gov.au/dataset/bail-statistics
 
+TUNG1205 (2026). Commits · TUNG1205/bail-outcomes-in-victoria--age-and-indigenous-status-trends. [online] GitHub. Available at: https://github.com/TUNG1205/Bail-Outcomes-in-Victoria--Age-and-Indigenous-Status-Trends/commits/main/ [Accessed 20 Aug. 2026].
+
 ##	**Presentation **
+[Tung's Presentation](https://rmit-arc.instructuremedia.com/embed/d76b8ee7-93f6-4c7a-8230-d336d4d8617c)
 
-Add the link to your presentation in ().
-
-[Presentation]()
+[Hoang's Presentation](https://rmit-arc.instructuremedia.com/embed/a7c0b929-3974-4bcb-80c9-3f5f961197b7)
 
